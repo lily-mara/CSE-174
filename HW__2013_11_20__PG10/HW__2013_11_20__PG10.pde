@@ -9,20 +9,30 @@ and allows the user to interact with them
 
 */
 
-Pixelite pacman = new Pixelite();
+boolean moveLeft = false;
+boolean moveRight = false;
+
+Pixelite pacman = new Pixelite(300, 430, 999);
+color gridColor = (#2121de);
 
 void setup() {
   size(597, 768);
   pacman.changeRollMode();
+  pacman.setColor(255, 255, 0);
 
+  smooth();
 }
 
 void draw() {
   background(0);
   drawPacManGrid();
   debuggingGrid(255);
+  noStroke();
   pacman.update();
+  pacman.talk();
   pacman.display();
+  makeHitBoxes(pacman);
+  movePix();
 }
 
 void debuggingGrid(int lineColor) {
@@ -38,7 +48,6 @@ void debuggingGrid(int lineColor) {
 }
 
 void drawBorders() {
-  color gridColor = (#2121de);
   stroke(gridColor);
   strokeWeight(2);
 
@@ -69,4 +78,45 @@ void drawBorders() {
 void drawPacManGrid() {
   drawBorders();
 
+}
+
+void makeHitBoxes(Pixelite inPixelite) {
+  inPixelite.repel(0, 722, width, height - 722); //bottom 
+  inPixelite.repel(0, 277, 116, 64);
+  inPixelite.repel(0, 404, 116, 64);
+  inPixelite.repel(481, 277, 116, 64);
+  inPixelite.repel(481, 404, 116, 64);
+}
+
+void keyPressed() {
+  if (keyCode == RIGHT) {
+    moveRight = true;
+  }
+
+  if (keyCode == LEFT) {
+    moveLeft = true;
+  }
+
+  if (keyCode == UP) {
+    pacman.jump();
+  }
+}
+
+void keyReleased() {
+  if (keyCode == LEFT) {
+    moveLeft = false;
+  }
+  
+  if (keyCode == RIGHT) {
+    moveRight = false;
+  }
+}
+
+void movePix() {
+  if (moveRight) {
+    pacman.moveRight();
+  }
+  if (moveLeft) {
+    pacman.moveLeft();
+  }
 }

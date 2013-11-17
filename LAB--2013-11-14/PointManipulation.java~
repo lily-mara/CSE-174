@@ -1,0 +1,10 @@
+// want to create and manipulate point objects
+// create point at (10, 20)
+
+public class PointManipulation {
+    public static void main(String[] args) {
+        
+        
+    }
+    
+}
