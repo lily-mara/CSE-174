@@ -11,14 +11,16 @@ and allows the user to interact with them
 
 boolean moveLeft = false;
 boolean moveRight = false;
+boolean jump = false;
+int curTime = 0;
+boolean keyHeld = false;
 
 Pixelite pacman = new Pixelite(300, 430, 999);
 color gridColor = (#2121de);
 
 void setup() {
   size(597, 768);
-  pacman.changeRollMode();
-  pacman.setColor(255, 255, 0);
+  setAppearance();
 
   smooth();
 }
@@ -26,25 +28,27 @@ void setup() {
 void draw() {
   background(0);
   drawPacManGrid();
-  debuggingGrid(255);
+  debuggingGrid(255, pacman.getPosX(), pacman.getPosY());
+  //debuggingGrid(#FF0000, mouseX, mouseY);
   noStroke();
   pacman.update();
   pacman.talk();
   pacman.display();
   makeHitBoxes(pacman);
   movePix();
+  wrapAround();
 }
 
-void debuggingGrid(int lineColor) {
+void debuggingGrid(color lineColor, float posX, float posY) {
   fill(lineColor);
   strokeWeight(3);
   stroke(lineColor);
 
-  line(mouseX, 0, mouseX, height);
-  line(0, mouseY, width, mouseY);
+  line(posX, 0, posX, height);
+  line(0, posY, width, posY);
 
-  text(mouseX, mouseX + 10, mouseY - 20);
-  text(mouseY, mouseX + 10, mouseY - 10);
+  text((int) posX, 20, 40);
+  text((int) posY, 20, 60);
 }
 
 void drawBorders() {
@@ -86,6 +90,9 @@ void makeHitBoxes(Pixelite inPixelite) {
   inPixelite.repel(0, 404, 116, 64);
   inPixelite.repel(481, 277, 116, 64);
   inPixelite.repel(481, 404, 116, 64);
+  inPixelite.repel(0, 0, width, 67);
+  inPixelite.repel(0, 0, 5, height);
+  inPixelite.repel(width - 5, 0, 5, height);
 }
 
 void keyPressed() {
@@ -98,17 +105,23 @@ void keyPressed() {
   }
 
   if (keyCode == UP) {
-    pacman.jump();
+    jump = true;
   }
 }
 
 void keyReleased() {
+  keyHeld = false;
+
   if (keyCode == LEFT) {
     moveLeft = false;
   }
   
   if (keyCode == RIGHT) {
     moveRight = false;
+  }
+
+  if (keyCode == UP) {
+    jump = false;
   }
 }
 
@@ -119,4 +132,39 @@ void movePix() {
   if (moveLeft) {
     pacman.moveLeft();
   }
+  if (jump && !keyHeld) {
+    keyHeld = true;
+    pacman.jump();
+  }
+}
+
+void jumpTest() {
+  if (millis() > curTime + 500) {
+    curTime = millis();
+    pacman.jump();
+  }
+}
+
+void wrapAround() {
+  int correctHeight = 374;
+  int leftWall = 35;
+  int rightWall = 562;
+  float x = pacman.getPosX();
+  float y = pacman.getPosY();
+
+  if (y == correctHeight) {
+    if (x == leftWall && moveLeft) {
+      pacman = new Pixelite(rightWall, correctHeight, 999);
+      setAppearance();
+    }
+    else if (x == rightWall && moveRight) {
+      pacman = new Pixelite(leftWall, correctHeight, 999);
+      setAppearance();
+    }
+  }
+}
+
+void setAppearance() {
+  pacman.changeRollMode();
+  pacman.setColor(255, 255, 0);
 }
