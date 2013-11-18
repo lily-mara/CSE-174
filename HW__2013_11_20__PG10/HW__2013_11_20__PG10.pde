@@ -29,7 +29,7 @@ boolean keyHeld = false;
 
 int curTime = 0;
 
-Pixelite pacman = new Pixelite(300, 520, 999);
+Pixelite pacman = new Pixelite(300, 507, 999);
 
 color gridColor = (#2121de);
 
@@ -70,8 +70,13 @@ void drawBorders() {
   stroke(gridColor);
   strokeWeight(1);
 
-  // left border
+  //top
   line(5, 67, width - 5, 67);
+
+  //bottom
+  line(5, 724, width - 5, 724);
+
+  // left border
   line(5, 67, 5, 277);
   line(5, 476, 5, 724);
   line(5, 476, 116, 476);
@@ -82,7 +87,6 @@ void drawBorders() {
   line(5, 404, 116, 404);
 
   //right border
-  line(5, 724, width - 5, 724);
   line(width - 5, 67, width - 5, 277);
   line(width - 5, 476, width - 5, 724);
   line(width - 5, 476, width - 116, 476);
@@ -96,11 +100,12 @@ void drawBorders() {
 
 void drawPacManGrid() {
   drawBorders();
-  drawLowerBox();
+  drawLowerBowl();
 }
 
 void makePacManGrid() {
   borderHitBoxes(pacman);
+  makeLowerBowl();
 }
 
 void borderHitBoxes(Pixelite inPixelite) {
@@ -193,18 +198,31 @@ void setAppearance() {
   pacman.setColor(255, 255, 0);
 }
 
-void drawLowerBox() {
+void drawLowerBowl() {
   //start platform
-  makeCollisionBox(230, 560, 137, 20, pacman);
+  drawCollisionBox(230, 560, 137, 20);
 
   //lower bowl devider
-  makeCollisionBox(79, 652, 182, 10, pacman);
-  makeCollisionBox(336, 652, 182, 10, pacman);
+  drawCollisionBox(79, 652, 182, 10);
+  drawCollisionBox(336, 652, 182, 10);
 
+  //upper-lower bowl
+  drawCollisionBox(5, 560, 150, 10);
+  drawCollisionBox(442, 560, 150, 10);
 }
 
-void lowerHitBoxes(Pixelite inPixelite) {
-  inPixelite.repel(230, 560, 137, 20);
+void makeLowerBowl() {
+  //start platform
+  pacman.repel(230, 560, 137, 20);
+
+  //lower bowl devider
+  pacman.repel(79, 652, 182, 10);
+  pacman.repel(336, 652, 182, 10);
+
+  //upper-lower bowl
+  pacman.repel(5, 560, 150, 10);
+  pacman.repel(442, 560, 150, 10);
+
 }
 
 void drawCollisionBox(float bX, float bY, float bWidth, float bHeight) {
@@ -212,9 +230,4 @@ void drawCollisionBox(float bX, float bY, float bWidth, float bHeight) {
   line(bX, bY + bHeight, bX + bWidth, bY + bHeight);
   line(bX, bY, bX, bY + bHeight);
   line(bX + bWidth, bY, bX + bWidth, bY + bHeight);
-}
-
-void makeCollisionBox(float bX, float bY, float bWidth, float bHeight, Pixelite inPixelite) {
-  inPixelite.repel(bX, bY, bWidth, bHeight);
-  drawCollisionBox(bX, bY, bWidth, bHeight);
 }
