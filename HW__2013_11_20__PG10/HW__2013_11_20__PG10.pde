@@ -7,6 +7,19 @@ Nate Mara
 This program Creates several pixelite objects 
 and allows the user to interact with them
 
+methods used:
+update
+repel
+display
+talk
+moveRight
+moveLeft
+changeRollMode
+jump
+getPosX
+getPoxY
+setColor
+
 */
 
 boolean moveLeft = false;
