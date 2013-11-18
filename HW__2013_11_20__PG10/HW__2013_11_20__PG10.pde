@@ -29,7 +29,7 @@ boolean keyHeld = false;
 
 int curTime = 0;
 
-Pixelite pacman = new Pixelite(300, 600, 999);
+Pixelite pacman = new Pixelite(300, 520, 999);
 
 color gridColor = (#2121de);
 
@@ -42,14 +42,14 @@ void setup() {
 
 void draw() {
   background(0);
-  makePacManGrid();
+  drawPacManGrid();
   //debuggingGrid(255, pacman.getPosX(), pacman.getPosY());
   debuggingGrid(#FF0000, mouseX, mouseY);
   noStroke();
   pacman.update();
   pacman.talk();
   pacman.display();
-  makeHitBoxes();
+  makePacManGrid();
   movePix();
   wrapAround();
 }
@@ -94,10 +94,13 @@ void drawBorders() {
 
 }
 
-void makePacManGrid() {
+void drawPacManGrid() {
   drawBorders();
-  makeHitBoxes();
+  drawLowerBox();
+}
 
+void makePacManGrid() {
+  borderHitBoxes(pacman);
 }
 
 void borderHitBoxes(Pixelite inPixelite) {
@@ -190,7 +193,7 @@ void setAppearance() {
   pacman.setColor(255, 255, 0);
 }
 
-void makeHitBoxes() {
+void drawLowerBox() {
   //start platform
   makeCollisionBox(230, 560, 137, 20, pacman);
 
@@ -198,6 +201,10 @@ void makeHitBoxes() {
   makeCollisionBox(79, 652, 182, 10, pacman);
   makeCollisionBox(336, 652, 182, 10, pacman);
 
+}
+
+void lowerHitBoxes(Pixelite inPixelite) {
+  inPixelite.repel(230, 560, 137, 20);
 }
 
 void drawCollisionBox(float bX, float bY, float bWidth, float bHeight) {
