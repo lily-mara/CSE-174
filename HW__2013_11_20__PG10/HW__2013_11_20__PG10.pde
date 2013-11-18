@@ -12,10 +12,12 @@ and allows the user to interact with them
 boolean moveLeft = false;
 boolean moveRight = false;
 boolean jump = false;
-int curTime = 0;
 boolean keyHeld = false;
 
+int curTime = 0;
+
 Pixelite pacman = new Pixelite(300, 430, 999);
+
 color gridColor = (#2121de);
 
 void setup() {
