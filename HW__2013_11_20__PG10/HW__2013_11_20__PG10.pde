@@ -2,10 +2,10 @@
 Nate Mara
 2013-11-17
 
-"Pixelite"
+"pacman"
 
-This program Creates several pixelite objects 
-and allows the user to interact with them
+This program creates a pacman object 
+and allows the user to interact with it
 
 methods used:
 update
@@ -42,6 +42,7 @@ void setup() {
 
 void draw() {
   background(0);
+  drawDots();
   drawPacManGrid();
   //debuggingGrid(255, pacman.getPosX(), pacman.getPosY());
   debuggingGrid(#FF0000, mouseX, mouseY);
@@ -101,11 +102,15 @@ void drawBorders() {
 void drawPacManGrid() {
   drawBorders();
   drawLowerBowl();
+  drawUpperBowl();
+  drawGhostBox();
 }
 
 void makePacManGrid() {
   borderHitBoxes(pacman);
   makeLowerBowl();
+  makeUpperBowl();
+  makeGhostBox();
 }
 
 void borderHitBoxes(Pixelite inPixelite) {
@@ -200,7 +205,7 @@ void setAppearance() {
 
 void drawLowerBowl() {
   //start platform
-  drawCollisionBox(230, 560, 137, 20);
+  drawCollisionBox(230, 560, 137, 10);
 
   //lower bowl devider
   drawCollisionBox(79, 652, 182, 10);
@@ -213,7 +218,7 @@ void drawLowerBowl() {
 
 void makeLowerBowl() {
   //start platform
-  pacman.repel(230, 560, 137, 20);
+  pacman.repel(230, 560, 137, 10);
 
   //lower bowl devider
   pacman.repel(79, 652, 182, 10);
@@ -230,4 +235,52 @@ void drawCollisionBox(float bX, float bY, float bWidth, float bHeight) {
   line(bX, bY + bHeight, bX + bWidth, bY + bHeight);
   line(bX, bY, bX, bY + bHeight);
   line(bX + bWidth, bY, bX + bWidth, bY + bHeight);
+}
+
+void drawUpperBowl() {
+  //lower bowl devider
+  drawCollisionBox(79, 127, 182, 10);
+  drawCollisionBox(336, 127, 182, 10);
+
+  //upper-lower bowl
+  drawCollisionBox(5, 200, 150, 10);
+  drawCollisionBox(230, 200, 137, 10);
+  drawCollisionBox(442, 200, 150, 10);
+}
+
+void makeUpperBowl() {
+  //lower bowl devider
+  pacman.repel(79, 127, 182, 10);
+  pacman.repel(336, 127, 182, 10);
+
+  //upper-lower bowl
+  pacman.repel(5, 200, 150, 10);
+  pacman.repel(230, 200, 137, 10);
+  pacman.repel(442, 200, 150, 10);
+}
+
+void makeGhostBox() {
+  pacman.repel(198, 309, 200, 96);
+}
+
+void drawGhostBox() {
+  PImage ghosts = loadImage("ghosts.png"); 
+
+  drawCollisionBox(198, 309, 200, 96);
+  drawCollisionBox(208, 319, 180, 76);
+
+  image(ghosts, 234, 330);
+}
+
+void drawDots() {
+  fill(255);
+  int[] heights = {95, 164, 242, 519, 611, 691, 373};
+
+  for (int j : heights) {
+    for (int i = 35; i < width - 35; i += 30)
+      rect(i, j, 5, 5);
+  }
+
+  fill(0);
+  rect(117, 348, 353, 40);
 }
