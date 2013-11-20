@@ -46,6 +46,7 @@ void setup() {
 void draw() {
   background(0);
   drawDots();
+  showHelp();
   drawPacManGrid();
   //debuggingGrid(255, pacman.getPosX(), pacman.getPosY());
   //debuggingGrid(#FF0000, mouseX, mouseY);
@@ -301,4 +302,12 @@ void drawDots() {
 
   fill(0);
   rect(117, 348, 353, 40);
+}
+
+// shows the helptext
+void showHelp() {
+  fill(255);
+  textAlign(CENTER);
+  text("Use arrow keys to control pacman", width/2, 33);
+  text("Press 'r' to reset the position",  width/2, 53);
 }
