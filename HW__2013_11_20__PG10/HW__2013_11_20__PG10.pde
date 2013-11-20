@@ -33,6 +33,7 @@ Pixelite pacman = new Pixelite(300, 507, 999);
 
 color gridColor = (#2121de);
 
+// sets size and appearance
 void setup() {
   size(597, 768);
   setAppearance();
@@ -40,12 +41,14 @@ void setup() {
   smooth();
 }
 
+// calls the talk, update, and display methods from the pacman class
+// , draws the grid in the background, and makes the collision objects 
 void draw() {
   background(0);
   drawDots();
   drawPacManGrid();
   //debuggingGrid(255, pacman.getPosX(), pacman.getPosY());
-  debuggingGrid(#FF0000, mouseX, mouseY);
+  //debuggingGrid(#FF0000, mouseX, mouseY);
   noStroke();
   pacman.update();
   pacman.talk();
@@ -55,6 +58,8 @@ void draw() {
   wrapAround();
 }
 
+// debugging method that draws a crosshair at the argument
+// position with the argument color
 void debuggingGrid(color lineColor, float posX, float posY) {
   fill(lineColor);
   strokeWeight(3);
@@ -67,6 +72,7 @@ void debuggingGrid(color lineColor, float posX, float posY) {
   text((int) posY, 20, 60);
 }
 
+// draws the outline of the playing field
 void drawBorders() {
   stroke(gridColor);
   strokeWeight(1);
@@ -99,6 +105,7 @@ void drawBorders() {
 
 }
 
+// calls all of the methods that draw the playing field grid
 void drawPacManGrid() {
   drawBorders();
   drawLowerBowl();
@@ -106,6 +113,8 @@ void drawPacManGrid() {
   drawGhostBox();
 }
 
+// calls all of the methods that make the physics
+// of the playing field grid
 void makePacManGrid() {
   borderHitBoxes(pacman);
   makeLowerBowl();
@@ -113,6 +122,7 @@ void makePacManGrid() {
   makeGhostBox();
 }
 
+// makes all of the hit boxes for the playing field border
 void borderHitBoxes(Pixelite inPixelite) {
   inPixelite.repel(0, 722, width, height - 722); //bottom 
   inPixelite.repel(0, 277, 116, 64);
@@ -124,6 +134,7 @@ void borderHitBoxes(Pixelite inPixelite) {
   inPixelite.repel(width - 5, 0, 5, height);
 }
 
+// the next several methods control movement
 void keyPressed() {
   if (keyCode == RIGHT) {
     moveRight = true;
@@ -172,13 +183,8 @@ void movePix() {
   }
 }
 
-void jumpTest() {
-  if (millis() > curTime + 500) {
-    curTime = millis();
-    pacman.jump();
-  }
-}
-
+// if pacman object goes to the side, teleports to the
+// other side in the same place
 void wrapAround() {
   int correctHeight = 374;
   int leftWall = 35;
@@ -198,11 +204,14 @@ void wrapAround() {
   }
 }
 
+// sets the color of a new pacman object, and makes it roll
+// instead of the standard sliding
 void setAppearance() {
   pacman.changeRollMode();
   pacman.setColor(255, 255, 0);
 }
 
+// draws the platforms in the lower bowl
 void drawLowerBowl() {
   //start platform
   drawCollisionBox(230, 560, 137, 10);
@@ -216,6 +225,7 @@ void drawLowerBowl() {
   drawCollisionBox(442, 560, 150, 10);
 }
 
+// makes the hitboxes for the platforms in the lower bowl
 void makeLowerBowl() {
   //start platform
   pacman.repel(230, 560, 137, 10);
@@ -230,6 +240,8 @@ void makeLowerBowl() {
 
 }
 
+// how a platform should look. 
+// called in a similar manner to the rect function
 void drawCollisionBox(float bX, float bY, float bWidth, float bHeight) {
   line(bX, bY, bX + bWidth, bY);
   line(bX, bY + bHeight, bX + bWidth, bY + bHeight);
@@ -237,6 +249,7 @@ void drawCollisionBox(float bX, float bY, float bWidth, float bHeight) {
   line(bX + bWidth, bY, bX + bWidth, bY + bHeight);
 }
 
+// draws the platforms in the upper bowl
 void drawUpperBowl() {
   //lower bowl devider
   drawCollisionBox(79, 127, 182, 10);
@@ -248,6 +261,7 @@ void drawUpperBowl() {
   drawCollisionBox(442, 200, 150, 10);
 }
 
+// makes the hitboxes for the platforms in the upper bowl
 void makeUpperBowl() {
   //lower bowl devider
   pacman.repel(79, 127, 182, 10);
@@ -259,10 +273,12 @@ void makeUpperBowl() {
   pacman.repel(442, 200, 150, 10);
 }
 
+//makes the hitbox for the box in which the ghosts stay
 void makeGhostBox() {
   pacman.repel(198, 309, 200, 96);
 }
 
+// draws the box in which the ghosts stay
 void drawGhostBox() {
   PImage ghosts = loadImage("ghosts.png"); 
 
@@ -272,6 +288,8 @@ void drawGhostBox() {
   image(ghosts, 234, 330);
 }
 
+// draws the dots that pacman should eat, but that's
+// beyond the scope of this program.
 void drawDots() {
   fill(255);
   int[] heights = {95, 164, 242, 519, 611, 691, 373};
