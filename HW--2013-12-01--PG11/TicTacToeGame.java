@@ -1,3 +1,9 @@
+// TicTacToeGame
+// Nate Mara
+// 2013-11-21
+// a simple TicTacToe game that
+// repeats
+
 import java.util.Scanner;
 
 public class TicTacToeGame {
