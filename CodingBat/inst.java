@@ -1,7 +1,12 @@
 import java.util.Arrays;
 public class inst {
 	public static void main(String[] args) {
-		printArray(insert(new int[] {5, 7, 11, 20}, 3, 0));
+		printArray(insert(new int[] {4, 7, 2, 8, 5}, 3, 0));
+		printArray(insert(new int[] {5, 10, 15, 20, 25, 30, 35, 40}, 5, 2));
+		printArray(insert(new int[] {5, 10, 15, 20, 25, 30, 35, 40}, 5, 5));
+		printArray(insert(new int[] {0, 1, 2, 3, 4, 5}, 5, 0));
+		printArray(insert(new int[] {0, 1, 2, 3, 4, 5}, 5, 4));
+		printArray(insert(new int[] {0, 1, 2, 3, 4, 5}, 5, 5));
 	}
 
 	
