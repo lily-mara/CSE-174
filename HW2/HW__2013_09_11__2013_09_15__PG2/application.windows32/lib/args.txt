@@ -1,3 +1,0 @@
-
-HW__2013_09_11__2013_09_15__PG2
-HW__2013_09_11__2013_09_15__PG2.jar,core.jar,jogl-all.jar,gluegen-rt.jar,jogl-all-natives-windows-i586.jar,gluegen-rt-natives-windows-i586.jar
